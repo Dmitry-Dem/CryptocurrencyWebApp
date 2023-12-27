@@ -20,6 +20,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CWA.Infrastructure", "src\External\CWA.Infrastructure\CWA.Infrastructure.csproj", "{546C31CC-DEE0-4AD3-BD80-37FA6DC2F385}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CWA.UnitTests", "tests\CWA.UnitTests\CWA.UnitTests.csproj", "{04419E73-A1F6-4CDE-B9AC-958A44D0040D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{546C31CC-DEE0-4AD3-BD80-37FA6DC2F385} = {546C31CC-DEE0-4AD3-BD80-37FA6DC2F385}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
