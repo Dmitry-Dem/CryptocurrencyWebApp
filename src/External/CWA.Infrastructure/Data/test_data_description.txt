@@ -1,0 +1,2 @@
+These json files are needed in order to provide the ability 
+to simulate the response of an API that will not be able to send a response to a request
