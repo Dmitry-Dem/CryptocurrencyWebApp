@@ -2,11 +2,11 @@ using CWA.Infrastructure.API;
 using FluentAssertions;
 using Xunit;
 
-namespace CWA.UnitTests
+namespace CWA.UnitTests.Infrastructure.APIs
 {
-	public class FallbackCryptoAPI_Tests
-	{
-		//Naming Convention - ClassName_MethodName_ExpectedResult
+    public class FallbackCryptoAPI_Tests
+    {
+        //Naming Convention - ClassName_MethodName_ExpectedResult
 
         [Fact]
         public async void FallbackCryptoAPI_GetTopNCurrenciesJsonAsync_ReturnsTopNCurrenciesJsonString()
@@ -28,11 +28,11 @@ namespace CWA.UnitTests
         {
             // Arrange
             FallbackCryptoAPI cryptoAPI = new FallbackCryptoAPI();
-            string id = "bitcoin";
+            string currencyId = "bitcoin";
             string targetCurrencyId = "usd";
 
             // Act
-            var result = await cryptoAPI.GetCurrencyPriceJsonByIdAsync(id, targetCurrencyId);
+            var result = await cryptoAPI.GetCurrencyPriceJsonByIdAsync(currencyId, targetCurrencyId);
 
             // Assert
             result.Should().NotBeNullOrEmpty();
@@ -43,10 +43,10 @@ namespace CWA.UnitTests
         {
             // Arrange
             FallbackCryptoAPI cryptoAPI = new FallbackCryptoAPI();
-            string id = "bitcoin";
+            string currencyId = "bitcoin";
 
             // Act
-            var result = await cryptoAPI.GetTickersJsonByCurrencyIdAsync(id);
+            var result = await cryptoAPI.GetTickersJsonByCurrencyIdAsync(currencyId);
 
             // Assert
             result.Should().NotBeNullOrEmpty();
@@ -70,26 +70,26 @@ namespace CWA.UnitTests
         {
             // Arrange
             FallbackCryptoAPI cryptoAPI = new FallbackCryptoAPI();
-            string id = "bitcoin";
+            string currencyId = "bitcoin";
             string targetCurrencyId = "usd";
 
             // Act
-            var result = await cryptoAPI.GetCurrencyDetailsJsonByIdAsync(id, targetCurrencyId);
+            var result = await cryptoAPI.GetCurrencyDetailsJsonByIdAsync(currencyId, targetCurrencyId);
 
             // Assert
             result.Should().NotBeNullOrEmpty();
         }
-        
+
         [Fact]
         public async void FallbackCryptoAPI_GetCurrencyHistorycalMarketDataJsonAsync_ReturnsCurrencyHistorycalMarketDataJsonString()
         {
             // Arrange
             FallbackCryptoAPI cryptoAPI = new FallbackCryptoAPI();
-            string id = "bitcoin";
+            string currencyId = "bitcoin";
             string days = "5";
 
             // Act
-            var result = await cryptoAPI.GetCurrencyHistorycalMarketDataJsonAsync(id, days);
+            var result = await cryptoAPI.GetCurrencyHistorycalMarketDataJsonAsync(currencyId, days);
 
             // Assert
             result.Should().NotBeNullOrEmpty();
