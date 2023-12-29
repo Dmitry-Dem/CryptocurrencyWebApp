@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CWA.Domain.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CWA.Infrastructure.API
 {
-    public class FallbackCryptoAPI
+    public class FallbackCryptoAPI : ICryptoAPI
     {
         string _basePath = string.Empty;
         public FallbackCryptoAPI()

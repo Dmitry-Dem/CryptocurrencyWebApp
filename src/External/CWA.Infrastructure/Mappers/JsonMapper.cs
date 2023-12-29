@@ -11,52 +11,6 @@ namespace CWA.Infrastructure.Mappers
 {
     public class JsonMapper
     {
-        public List<Currency>? MapJsonCurrenciesToCurrencyList(string jsonString)
-        {
-            try
-            {
-                JArray jsonArray = JArray.Parse(jsonString);
-
-                var currencies = new List<Currency>();
-
-                foreach (var jsonObj in jsonArray)
-                {
-                    currencies.Add(new Currency()
-                    {
-                        Id = (string)jsonObj["id"],
-                        Name = (string)jsonObj["name"],
-                        Symbol = (string)jsonObj["symbol"],
-                        ImageUrl = (string)jsonObj["image"],
-                        Price = (decimal)jsonObj["current_price"],
-                        Rank = (int)jsonObj["market_cap_rank"]
-                    });
-                }
-
-                return currencies;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error mapping JsonCurrencies to List<Currency>: {ex.Message}");
-                return null;
-            }
-        }
-        public decimal MapJsonCurrencyPriceToDecimal(string jsonString, string currencyId, string targetCurrencyId)
-        { 
-            try
-            {
-                JObject jsonObject = JObject.Parse(jsonString);
-
-                decimal price = (decimal)jsonObject[currencyId][targetCurrencyId];
-
-                return price;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error mapping JsonCurrencyPrice to decimal: {ex.Message}");
-
-                return -1;
-            }
-        }
         public List<Ticker> MapJsonTickersToTickerList(string jsonString)
         {
             try
@@ -84,6 +38,35 @@ namespace CWA.Infrastructure.Mappers
             catch (Exception ex)
             {
                 Console.WriteLine($"Error mapping JsonTickers to List<Ticker>: {ex.Message}");
+                return null;
+            }
+        }
+        public List<Currency> MapJsonCurrenciesToCurrencyList(string jsonString)
+        {
+            try
+            {
+                JArray jsonArray = JArray.Parse(jsonString);
+
+                var currencies = new List<Currency>();
+
+                foreach (var jsonObj in jsonArray)
+                {
+                    currencies.Add(new Currency()
+                    {
+                        Id = (string)jsonObj["id"],
+                        Name = (string)jsonObj["name"],
+                        Symbol = (string)jsonObj["symbol"],
+                        ImageUrl = (string)jsonObj["image"],
+                        Price = (decimal)jsonObj["current_price"],
+                        Rank = (int)jsonObj["market_cap_rank"]
+                    });
+                }
+
+                return currencies;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error mapping JsonCurrencies to List<Currency>: {ex.Message}");
                 return null;
             }
         }
@@ -128,6 +111,23 @@ namespace CWA.Infrastructure.Mappers
                 Console.WriteLine($"Error mapping JsonCurrencyDetails to CurrencyDetails: {ex.Message}");
 
                 return null;
+            }
+        }
+        public decimal MapJsonCurrencyPriceToDecimal(string jsonString, string currencyId, string targetCurrencyId)
+        { 
+            try
+            {
+                JObject jsonObject = JObject.Parse(jsonString);
+
+                decimal price = (decimal)jsonObject[currencyId][targetCurrencyId];
+
+                return price;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error mapping JsonCurrencyPrice to decimal: {ex.Message}");
+
+                return -1;
             }
         }
         public CurrencyPriceChartData MapJsonCurrencyHistorycalMarketDataToCurrencyPriceChartData(string jsonString)

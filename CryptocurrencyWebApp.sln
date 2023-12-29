@@ -12,6 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{2C92F49F-4653-4F78-9FD7-7E894A2EAEC1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CWA.Application", "src\Core\CWA.Application\CWA.Application.csproj", "{44BF59EB-DA5E-4BC7-BAE2-A6187CC9828A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7992260-7F6E-4A8B-8619-1C29E4CBAE37} = {F7992260-7F6E-4A8B-8619-1C29E4CBAE37}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CWA.Domain", "src\Core\CWA.Domain\CWA.Domain.csproj", "{F7992260-7F6E-4A8B-8619-1C29E4CBAE37}"
 EndProject

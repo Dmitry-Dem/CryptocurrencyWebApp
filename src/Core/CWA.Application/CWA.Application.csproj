@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CWA.Domain\CWA.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
