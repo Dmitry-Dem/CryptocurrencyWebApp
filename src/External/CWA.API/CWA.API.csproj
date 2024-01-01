@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\CWA.Domain\CWA.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
