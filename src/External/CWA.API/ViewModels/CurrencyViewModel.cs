@@ -23,5 +23,9 @@ namespace CWA.API.ViewModels
         public string Symbol { get; set; }
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
+        public static List<CurrencyViewModel> GetCurrencyViewModelList(List<Currency> currencies)
+        {
+            return currencies.Select(item => new CurrencyViewModel(item)).ToList();
+        }
     }
 }

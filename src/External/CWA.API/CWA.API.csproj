@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\CWA.Application\CWA.Application.csproj" />
     <ProjectReference Include="..\..\Core\CWA.Domain\CWA.Domain.csproj" />
+    <ProjectReference Include="..\CWA.Infrastructure\CWA.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

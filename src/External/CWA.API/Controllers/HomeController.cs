@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CWA.API.ViewModels;
+using CWA.Domain.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CWA.API.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ICryptoService _cryptoService;
+        public HomeController(ICryptoService cryptoService)
         {
-            return View();
+            _cryptoService = cryptoService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var currencies = await _cryptoService.GetTopNCurrenciesAsync(100, 1);
+
+            return View(CurrencyViewModel.GetCurrencyViewModelList(currencies));
         }
         public IActionResult TopCurrencies()
         {
