@@ -17,10 +17,11 @@ namespace CWA.API.Controllers
 
             return View(CurrencyViewModel.GetCurrencyViewModelList(currencies));
         }
-        public IActionResult TopCurrencies()
+        [Route("Home/CurrencyDetails/{currencyId}")]
+        public IActionResult CurrencyDetails(string currencyId)
         {
-            return View();
-        }
+            return View("CurrencyDetails", currencyId);
+        } 
         public IActionResult Converter()
         {
             return View();

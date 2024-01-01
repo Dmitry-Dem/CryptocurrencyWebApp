@@ -11,7 +11,7 @@ namespace CWA.API.ViewModels
             Rank = currencyDetails.Rank;
             Symbol = currencyDetails.Symbol;
             ImageUrl = currencyDetails.ImageUrl;
-            Price = currencyDetails.Price;
+            Price = currencyDetails.Price.ToString();
 
             FullyDilutedValuation = currencyDetails.FullyDilutedValuation;
             CirculatingSupply = currencyDetails.CirculatingSupply;
