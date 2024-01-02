@@ -127,7 +127,11 @@ namespace CWA.Infrastructure.Mappers
             {
                 Console.WriteLine($"Error mapping JsonCurrencyPrice to decimal: {ex.Message}");
 
-                return -1;
+                JObject jsonObject = JObject.Parse(jsonString);
+
+                decimal price = (decimal)jsonObject["bitcoin"]["usd"];
+
+                return price;
             }
         }
         public CurrencyPriceChartData MapJsonCurrencyHistorycalMarketDataToCurrencyPriceChartData(string jsonString)

@@ -20,11 +20,26 @@ namespace CWA.API.Controllers
         [Route("Home/CurrencyDetails/{currencyId}")]
         public IActionResult CurrencyDetails(string currencyId)
         {
-            return View("CurrencyDetails", currencyId);
-        } 
-        public IActionResult Converter()
+            return View(model: currencyId);
+        }
+        public async Task<IActionResult> Converter()
         {
-            return View();
+            ConvertViewModel convertViewModel = new ConvertViewModel()
+            {
+                SourceCurrencies = await _cryptoService.GetCurrencyListAsync(),
+                TargetCurrencies = await _cryptoService.GetSupportedVSCurrenciesAsync()
+            };
+
+            return View(model: convertViewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ConvertCurrency(string currencyId, string targetCurrencyId, decimal amount)
+        {
+            var price = await _cryptoService.GetCurrencyPriceByIdAsync(currencyId, targetCurrencyId);
+
+            string result = $"{amount} ({currencyId})  =  {amount * price}  ({targetCurrencyId})";
+
+            return Json(new { result } );
         }
     }
 }
