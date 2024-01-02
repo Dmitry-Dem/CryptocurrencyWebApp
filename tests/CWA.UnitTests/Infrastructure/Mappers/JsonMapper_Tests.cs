@@ -46,6 +46,32 @@ namespace CWA.UnitTests.Infrastructure.Mappers
         }
         
         [Fact]
+        public async void JsonMapper_MapJsonCurrencyListToCurrencyBaseList_ReturnsCurrencyBaseList()
+        {
+            // Arrange
+            FallbackCryptoAPI cryptoAPI = new FallbackCryptoAPI();
+            JsonMapper jsonMapper = new JsonMapper();
+
+            // Act
+            var jsonString = await cryptoAPI.GetCurrencyListJsonAsync();
+
+            var result = jsonMapper.MapJsonCurrencyListToCurrencyBaseList(jsonString);
+
+            // Assert
+            jsonString.Should().NotBeNullOrEmpty();
+
+            result.Should().NotBeNull();
+            result.Should().HaveCountGreaterThan(0);
+
+            var currency = result?.FirstOrDefault();
+
+            currency.Should().NotBeNull();
+
+            currency.Name.Should().NotBeNullOrEmpty();
+            currency.Id.Should().NotBeNullOrEmpty();
+            currency.Symbol.Should().NotBeNullOrEmpty();
+        }
+        [Fact]
         public async void JsonMapper_GetCurrencyPriceJsonByIdAsync_ReturnsCurrencyPrice()
         {
             // Arrange
@@ -90,14 +116,14 @@ namespace CWA.UnitTests.Infrastructure.Mappers
         }
 
         [Fact]
-        public async void JsonMapper_MapJsonSupportedCurrenciesToStringList_ReturnsStringList()
+        public async void JsonMapper_MapJsonSupportedVSCurrenciesToStringList_ReturnsStringList()
         {
             // Arrange
             FallbackCryptoAPI cryptoAPI = new FallbackCryptoAPI();
             JsonMapper jsonMapper = new JsonMapper();
 
             // Act
-            var jsonString = await cryptoAPI.GetSupportedCurrenciesJsonAsync();
+            var jsonString = await cryptoAPI.GetSupportedVSCurrenciesJsonAsync();
             var result = jsonMapper.MapJsonSupportedCurrenciesToStringList(jsonString);
 
             // Assert

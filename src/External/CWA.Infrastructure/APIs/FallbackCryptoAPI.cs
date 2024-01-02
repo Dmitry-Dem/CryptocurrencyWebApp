@@ -26,16 +26,22 @@ namespace CWA.Infrastructure.API
             {
                 while (!streamReader.EndOfStream)
                 {
-                    string line = await streamReader.ReadLineAsync();
+                    string? line = await streamReader.ReadLineAsync();
                     stringBuilder.AppendLine(line);
                 }
             }
 
             return stringBuilder.ToString();
         }
-        public async Task<string> GetSupportedCurrenciesJsonAsync()
+        public async Task<string> GetCurrencyListJsonAsync()
         {
-            string fileName = "supported_currencies_responce.json";
+            string fileName = "coins_list_responce.json";
+
+            return await ReadFileAsync(Path.Combine(_basePath, fileName));
+        }
+        public async Task<string> GetSupportedVSCurrenciesJsonAsync()
+        {
+            string fileName = "supported_vs_currencies_responce.json";
 
             return await ReadFileAsync(Path.Combine(_basePath, fileName));
         }

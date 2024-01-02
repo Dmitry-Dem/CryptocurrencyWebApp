@@ -11,9 +11,13 @@ namespace CWA.Application.Services
         {
             _cryptoRepository = cryptoRepository;
         }
-        public async Task<List<string>> GetSupportedCurrenciesAsync()
+        public async Task<List<CurrencyBase>> GetCurrencyListAsync()
         {
-            return await _cryptoRepository.GetSupportedCurrenciesAsync();
+            return await _cryptoRepository.GetCurrencyListAsync();
+        }
+        public async Task<List<string>> GetSupportedVSCurrenciesAsync()
+        {
+            return await _cryptoRepository.GetSupportedVSCurrenciesAsync();
         }
         public async Task<List<Ticker>> GetTickersByCurrencyIdAsync(string currencyId)
         {

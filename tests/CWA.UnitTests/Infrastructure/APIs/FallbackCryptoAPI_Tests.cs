@@ -24,6 +24,19 @@ namespace CWA.UnitTests.Infrastructure.APIs
         }
 
         [Fact]
+        public async void FallbackCryptoAPI_GetCurrencyListJsonAsync_ReturnsCurrencyListJsonString()
+        {
+            // Arrange
+            FallbackCryptoAPI cryptoAPI = new FallbackCryptoAPI();
+
+            // Act
+            var result = await cryptoAPI.GetCurrencyListJsonAsync();
+
+            // Assert
+            result.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
         public async void FallbackCryptoAPI_GetCurrencyPriceJsonByIdAsync_ReturnsCurrencyPriceStringJsonById()
         {
             // Arrange
@@ -53,13 +66,13 @@ namespace CWA.UnitTests.Infrastructure.APIs
         }
 
         [Fact]
-        public async void FallbackCryptoAPI_GetSupportedCurrenciesJsonAsync_ReturnsSupportedCurrenciesJsonString()
+        public async void FallbackCryptoAPI_GetSupportedVSCurrenciesJsonAsync_ReturnsSupportedCurrenciesJsonString()
         {
             // Arrange
             FallbackCryptoAPI cryptoAPI = new FallbackCryptoAPI();
 
             // Act
-            var result = await cryptoAPI.GetSupportedCurrenciesJsonAsync();
+            var result = await cryptoAPI.GetSupportedVSCurrenciesJsonAsync();
 
             // Assert
             result.Should().NotBeNullOrEmpty();

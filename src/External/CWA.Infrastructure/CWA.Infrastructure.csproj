@@ -8,10 +8,11 @@
 
   <ItemGroup>
     <None Remove="Data\bitcoin_to_usd_price_responce.json" />
+    <None Remove="Data\coins_list_responce.json" />
     <None Remove="Data\currency-bitcoin_tickers_responce.json" />
     <None Remove="Data\get_currency_by_id-bitcoin_responce.json" />
     <None Remove="Data\get_currency_prices_by_id-bitcoin_target-usd_days-5_responce.json" />
-    <None Remove="Data\supported_currencies_responce.json" />
+    <None Remove="Data\supported_vs_currencies_responce.json" />
     <None Remove="Data\test_data_description.txt" />
     <None Remove="Data\top-250-currencies_page-1_responce.json" />
   </ItemGroup>
@@ -29,7 +30,10 @@
     <Content Include="Data\get_currency_prices_by_id-bitcoin_target-usd_days-5_responce.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\supported_currencies_responce.json">
+    <Content Include="Data\supported_vs_currencies_responce.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\coins_list_responce.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\test_data_description.txt">

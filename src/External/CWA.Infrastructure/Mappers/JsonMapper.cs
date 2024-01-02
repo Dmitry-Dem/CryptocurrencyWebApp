@@ -145,5 +145,31 @@ namespace CWA.Infrastructure.Mappers
                 return null;
             }
         }
+        public List<CurrencyBase> MapJsonCurrencyListToCurrencyBaseList(string jsonString)
+        {
+            try
+            {
+                JArray jsonArray = JArray.Parse(jsonString);
+
+                var currencies = new List<CurrencyBase>();
+
+                foreach (var jsonObj in jsonArray)
+                {
+                    currencies.Add(new CurrencyBase()
+                    {
+                        Id = (string)jsonObj["id"],
+                        Name = (string)jsonObj["name"],
+                        Symbol = (string)jsonObj["symbol"]
+                    });
+                }
+
+                return currencies;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error mapping JsonCurrencyList to List<CurrencyBase>: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

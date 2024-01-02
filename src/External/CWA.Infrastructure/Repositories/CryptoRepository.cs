@@ -19,9 +19,15 @@ namespace CWA.Infrastructure.Repositories
             _cryptoAPI = cryptoAPI;
             _jsonMapper = new JsonMapper();
         }
-        public async Task<List<string>> GetSupportedCurrenciesAsync()
+        public async Task<List<CurrencyBase>> GetCurrencyListAsync()
         {
-            var jsonString = await _cryptoAPI.GetSupportedCurrenciesJsonAsync();
+            var jsonString = await _cryptoAPI.GetCurrencyListJsonAsync();
+
+            return _jsonMapper.MapJsonCurrencyListToCurrencyBaseList(jsonString);
+        }
+        public async Task<List<string>> GetSupportedVSCurrenciesAsync()
+        {
+            var jsonString = await _cryptoAPI.GetSupportedVSCurrenciesJsonAsync();
 
             return _jsonMapper.MapJsonSupportedCurrenciesToStringList(jsonString);
         }

@@ -9,7 +9,8 @@ namespace CWA.Domain.Services
 {
     public interface ICryptoService
     {
-        Task<List<string>> GetSupportedCurrenciesAsync();
+        Task<List<CurrencyBase>> GetCurrencyListAsync();
+        Task<List<string>> GetSupportedVSCurrenciesAsync();
         Task<List<Ticker>> GetTickersByCurrencyIdAsync(string currencyId);
         Task<List<Currency>> GetTopNCurrenciesAsync(int topN, int pageNum);
         Task<CurrencyPriceChartData> GetCurrencyHistorycalMarketDataAsync(string currencyId, string days);

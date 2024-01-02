@@ -8,7 +8,8 @@ namespace CWA.Domain.API
 {
     public interface ICryptoAPI
     {
-        Task<string> GetSupportedCurrenciesJsonAsync();
+        Task<string> GetSupportedVSCurrenciesJsonAsync();
+        Task<string> GetCurrencyListJsonAsync();
         Task<string> GetTickersJsonByCurrencyIdAsync(string currencyId);
         Task<string> GetTopNCurrenciesJsonAsync(int topN, int pageNum);
         Task<string> GetCurrencyHistorycalMarketDataJsonAsync(string currencyId, string days);
