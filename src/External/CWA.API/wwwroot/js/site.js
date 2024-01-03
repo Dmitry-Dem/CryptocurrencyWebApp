@@ -12,7 +12,6 @@ $(document).ready(function () {
         var currencyId = $('#searchInputDataSource').val();
         var targetCurrencyId = $('#searchInputDataTarget').val();
 
-        // Make an AJAX request to the controller action
         $.ajax({
             url: '/Home/ConvertCurrency',
             type: 'POST',
@@ -26,3 +25,6 @@ $(document).ready(function () {
         });
     });
 });
+
+/* Views/Home/Currencydetails.cshtml -- Chart -- */
+

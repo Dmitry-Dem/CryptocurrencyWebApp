@@ -18,9 +18,16 @@ namespace CWA.API.Controllers
             return View(CurrencyViewModel.GetCurrencyViewModelList(currencies));
         }
         [Route("Home/CurrencyDetails/{currencyId}")]
-        public IActionResult CurrencyDetails(string currencyId)
+        public async Task<IActionResult> CurrencyDetails(string currencyId)
         {
-            return View(model: currencyId);
+            var result = new CurrencyDetailsPageViewModel()
+            {
+                CurrencyDetails = new(await _cryptoService.GetCurrencyDetailsByIdAsync(currencyId, "usd")),
+                CurrencyPrices = new(await _cryptoService.GetCurrencyHistorycalMarketDataAsync(currencyId, "7")),
+                Markets = TickerViewModel.GetTickerViewModelList(await _cryptoService.GetTickersByCurrencyIdAsync(currencyId))
+            };
+
+            return View(model: result);
         }
         public async Task<IActionResult> Converter()
         {

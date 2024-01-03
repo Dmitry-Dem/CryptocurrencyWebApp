@@ -28,7 +28,7 @@
                     {
                         <tr>
                             <td>@(i + 1)</td>
-                            <td><img src="@(Model[i].ImageUrl)" class="table_image"></td>
+                            <td><img src="@(Model[i].ImageUrl)" class="table-image"></td>
                             <td><a class="table_link" asp-controller="Home" asp-action="CurrencyDetails" asp-route-currencyId="@(Model[i].Id)">@Model[i].Name</a></td>
                             <td>@Model[i].Rank</td>
                             <td>@Model[i].Symbol</td>

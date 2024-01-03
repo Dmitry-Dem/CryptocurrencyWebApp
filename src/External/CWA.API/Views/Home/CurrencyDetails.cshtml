@@ -1,7 +1,173 @@
-﻿@model string
+﻿@model CurrencyDetailsPageViewModel
 
 @{
     ViewData["Title"] = "Currency Details";
+    Layout = null;
 }
 
-<h1>Currency Details - @Model</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CryptoApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CWA.API.styles.css" asp-append-version="true" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">CryptoApp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">All Currencies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Converter">Converter</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content container flex-grow-1">
+        <main role="main" class="pb-3">
+            <section class="currency-details container">
+                <div class="d-flex justify-content-between">
+                    <div class="currency-info pe-4">
+                        <p class="h4"><span class="badge bg-secondary bg-black">Rank # @(Model.CurrencyDetails.Rank)</span></p>
+
+                        <div class="d-flex align-items-center">
+                            <img src="@(Model.CurrencyDetails.ImageUrl)" class="currency-icon" />
+
+                            <p class="h4 mx-2 mb-0">@Model.CurrencyDetails.Name</p>
+
+                            <p class="h5 text-muted m-0">@Model.CurrencyDetails.Symbol</p>
+                        </div>
+
+                        <p class="h2 my-3">@Model.CurrencyDetails.Price</p>
+
+                        <div>
+                            <div class="d-flex justify-content-between border-top-gray">
+                                <p class="text-muted">Market Cap</p>
+
+                                <p>@Model.CurrencyDetails.MarketCap</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between border-top-gray">
+                                <p class="text-muted">Fully Diluted Valuation</p>
+
+                                <p>@Model.CurrencyDetails.FullyDilutedValuation</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between border-top-gray">
+                                <p class="text-muted">Circulating Supply</p>
+
+                                <p>@Model.CurrencyDetails.CirculatingSupply</p>
+                            </div>
+
+                            <div class="d-flex justify-content-between border-top-gray">
+                                <p class="text-muted">Total Supply</p>
+
+                                <p>@Model.CurrencyDetails.TotalSupply</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="currency-markets overflow-auto flex-grow-1">
+                        <div class="container-table100">
+                            <div class="wrap-table100">
+                                <div class="table100">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr class="table100-head">
+                                                <th>Excanger</th>
+                                                <th>Base / Target</th>
+                                                <th>Price</th>
+                                                <th>Open</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                            @for (int i = 0; i < Model.Markets.Count; i++)
+                                            {
+                                                <tr>
+                                                    <td>@Model.Markets[i].MarketName</td>
+                                                    <td>@(Model.Markets[i].Base) / @(Model.Markets[i].Target)</td>
+                                                    <td>@Model.Markets[i].PriceInUSD</td>
+                                                    <td><a class="btn btn-primary" href="@(Model.Markets[i].TradeUrl)">Open</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="currency-chart">
+                    <canvas id="currencyChart"></canvas>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted py-3">
+        <div class="container">
+            &copy; 2024 - CryptoApp - <a>Privacy</a>
+        </div>
+    </footer>
+
+    <script>
+        var ctx = document.getElementById('currencyChart').getContext('2d');
+        var chartData = @Html.Raw(Json.Serialize(Model.CurrencyPrices.Prices));
+
+        var formattedDates = chartData.map(entry => moment(entry.date).format('DD-MMM-YYYY HH:mm'));
+        var prices = chartData.map(entry => entry.price);
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: formattedDates,
+                datasets: [{
+                    label: 'Currency Price',
+                    data: prices,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function (value, index, ticks) {
+                                return '$ ' + value;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</body>
+</html>
