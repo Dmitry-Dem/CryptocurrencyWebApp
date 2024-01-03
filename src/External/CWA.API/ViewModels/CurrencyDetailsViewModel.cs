@@ -4,7 +4,7 @@ namespace CWA.API.ViewModels
 {
     public class CurrencyDetailsViewModel : CurrencyViewModel
     {
-        public CurrencyDetailsViewModel(CurrencyDetails currencyDetails, Currency currency)
+        public CurrencyDetailsViewModel(CurrencyDetails currencyDetails)
         {
             Id = currencyDetails.Id;
             Name = currencyDetails.Name;

@@ -17,5 +17,9 @@ namespace CWA.API.ViewModels
         public string MarketName { get; set; }
         public string TradeUrl { get; set; }
         public decimal PriceInUSD { get; set; }
+        public static List<TickerViewModel> GetTickerViewModelList(List<Ticker> tickers)
+        {
+            return tickers.Select(item => new TickerViewModel(item)).ToList();
+        }
     }
 }

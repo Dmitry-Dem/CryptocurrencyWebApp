@@ -2,6 +2,6 @@
 {
     public class CurrencyPriceChartData
     {
-        public List<List<decimal>> Prices { get; set; }
+        public List<List<long>> Prices { get; set; }
     }
 }

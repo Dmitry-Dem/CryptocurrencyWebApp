@@ -6,8 +6,15 @@ namespace CWA.API.ViewModels
     {
         public CurrencyPriceChartDataViewModel(CurrencyPriceChartData chartData)
         {
-            Prices = chartData.Prices;
+            foreach (var dataPoint in chartData.Prices)
+            {
+                Prices.Add(new ChartViewModel()
+                {
+                   Date = DateTimeOffset.FromUnixTimeMilliseconds(dataPoint[0]).DateTime,
+                   Price = dataPoint[1]
+                });
+            }
         }
-        public List<List<decimal>> Prices { get; set; }
+        public List<ChartViewModel> Prices { get; set; } = new();
     }
 }
