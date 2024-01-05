@@ -12,25 +12,23 @@
             <table class="table table-hover">
                 <thead>
                     <tr class="table100-head">
-                        <th>#</th>
+                        <th>Rank</th>
                         <th>Coin</th>
                         <th>Name</th>
-                        <th>Rank</th>
                         <th>Symbol</th>
                         <th>Price</th>
                         <th>Details</th>
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="CurrencyList">
 
                     @for(int i = 0; i < Model.Count; i++)
                     {
                         <tr>
-                            <td>@(i + 1)</td>
+                            <td>@Model[i].Rank</td>
                             <td><img src="@(Model[i].ImageUrl)" class="table-image"></td>
                             <td><a class="table_link" asp-controller="Home" asp-action="CurrencyDetails" asp-route-currencyId="@(Model[i].Id)">@Model[i].Name</a></td>
-                            <td>@Model[i].Rank</td>
                             <td>@Model[i].Symbol</td>
                             <td>@Model[i].Price</td>
                             <td><a class="btn btn-primary" asp-controller="Home" asp-action="CurrencyDetails" asp-route-currencyId="@(Model[i].Id)">Open</a></td>
@@ -41,3 +39,5 @@
         </div>
     </div>
 </div>
+
+<button id="NextCurrenciesPage"class="btn btn-success">More</button>
