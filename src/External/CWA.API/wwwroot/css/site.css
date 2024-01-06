@@ -27,6 +27,18 @@ body {
     margin-bottom: 60px;
 }
 
+.header-input-group {
+    width: auto;
+}
+
+.header-search-input:focus {
+    box-shadow: none;
+}
+
+.header-search-input {
+    min-width: 230px;
+}
+
 .table-image,
 .currency-icon {
     width: 30px;

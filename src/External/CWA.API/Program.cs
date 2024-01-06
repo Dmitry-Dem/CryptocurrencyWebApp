@@ -12,6 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ICryptoAPI, FallbackCryptoAPI>();
 builder.Services.AddTransient<ICryptoRepository, CryptoRepository>();
 builder.Services.AddTransient<ICryptoService, CryptoService>();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -29,6 +30,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

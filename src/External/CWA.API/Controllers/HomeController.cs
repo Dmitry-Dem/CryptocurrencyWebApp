@@ -2,6 +2,7 @@
 using CWA.API.ViewModels;
 using CWA.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace CWA.API.Controllers
 {
@@ -19,6 +20,8 @@ namespace CWA.API.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            await LoadAvailableCurrencies();
+
             if (Currencies.Count == 0)
             {
                 var currencies = await _cryptoService.GetTopNCurrenciesAsync(topN: 250, pageNum: 1);
@@ -30,10 +33,22 @@ namespace CWA.API.Controllers
 
             return View(result);
         }
+        private async Task<List<CurrencyBaseViewModel>> LoadAvailableCurrencies()
+        {
+            var currencies = await _cryptoService.GetCurrencyListAsync();
+
+            var currenciesVM = CurrencyBaseViewModel.GetCurrencyBaseViewModelList(currencies);
+
+            TempData["AvailableCurrencies"] = currenciesVM;
+
+            return currenciesVM;
+        }
 
         [Route("Home/CurrencyDetails/{currencyId}")]
         public async Task<IActionResult> CurrencyDetails(string currencyId)
         {
+            await LoadAvailableCurrencies();
+
             var result = new CurrencyDetailsPageViewModel()
             {
                 CurrencyDetails = new(await _cryptoService.GetCurrencyDetailsByIdAsync(currencyId, "usd")),
@@ -47,7 +62,7 @@ namespace CWA.API.Controllers
         {
             ConvertViewModel convertViewModel = new ConvertViewModel()
             {
-                SourceCurrencies = await _cryptoService.GetCurrencyListAsync(),
+                SourceCurrencies = await LoadAvailableCurrencies(),
                 TargetCurrencies = await _cryptoService.GetSupportedVSCurrenciesAsync()
             };
 

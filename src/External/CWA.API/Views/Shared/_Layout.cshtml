@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@{
+
+    List<CurrencyBaseViewModel> availableCurrencies = new();
+
+    if (TempData.ContainsKey("AvailableCurrencies"))
+    {
+        availableCurrencies = (List<CurrencyBaseViewModel>)TempData["AvailableCurrencies"];
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,6 +36,23 @@
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Converter">Converter</a>
                         </li>
                     </ul>
+
+                    <div class="input-group header-input-group">
+                        <div class="form-outline">
+                            <input type="search" id="availableCurrency" list="searchAvailableCurrencies" class="form-control header-search-input" placeholder="Search Currency here..." />
+                        </div>
+
+                        <button type="button" id="openCurrencyDetailsPage" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+
+                        <datalist id="searchAvailableCurrencies">
+                            @foreach (var currency in availableCurrencies)
+                            {
+                                <option value="@currency.Id">@(currency.Name + $" ({currency.Symbol})")</option>
+                            }
+                        </datalist>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -45,6 +72,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
