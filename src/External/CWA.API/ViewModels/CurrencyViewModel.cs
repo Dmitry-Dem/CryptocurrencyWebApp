@@ -2,7 +2,7 @@
 
 namespace CWA.API.ViewModels
 {
-    public class CurrencyViewModel
+    public class CurrencyViewModel : CurrencyBaseViewModel
     {
         public CurrencyViewModel()
         {
@@ -17,18 +17,50 @@ namespace CWA.API.ViewModels
             ImageUrl = currency.ImageUrl;
             Price = currency.Price.ToString();
         }
-        public string Id { get; set; }
-        public string Name { get; set; }
         public int Rank { get; set; }
 
-        private string _price;
+        private string _price = string.Empty;
         public string Price
         {
-            get { return "$" + _price; }
+            get { return GetFormattedPrice(_price, BasePriceChar); }
             set { _price = value; }
         }
-        public string ImageUrl { get; set; }
-        public string Symbol { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
+        protected string GetFormattedPrice(string price, char priceSymbol)
+        {
+            Stack<char> formattedPrice = new Stack<char>();
+
+            int dotIndex = price.IndexOf('.');
+
+            int startIndex = price.Length - 1;
+
+            if (dotIndex != -1)
+            {
+                startIndex = dotIndex - 1;
+
+                for (int i = price.Length - 1; i >= dotIndex; i--)
+                    formattedPrice.Push(price[i]);
+            }
+
+            int digitCount = 0;
+
+            for (int i = startIndex; i >= 0; i--)
+            {
+                if (digitCount >= 3)
+                {
+                    digitCount = 0;
+                    formattedPrice.Push(',');
+                }
+
+                formattedPrice.Push(price[i]);
+                digitCount++;
+            }
+
+            formattedPrice.Push(' ');
+            formattedPrice.Push(priceSymbol);
+
+            return new string(formattedPrice.ToArray());
+        }
         public static List<CurrencyViewModel> GetCurrencyViewModelList(List<Currency> currencies)
         {
             return currencies.Select(item => new CurrencyViewModel(item)).ToList();

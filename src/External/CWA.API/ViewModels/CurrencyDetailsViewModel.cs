@@ -13,16 +13,46 @@ namespace CWA.API.ViewModels
             ImageUrl = currencyDetails.ImageUrl;
             Price = currencyDetails.Price.ToString();
 
-            FullyDilutedValuation = currencyDetails.FullyDilutedValuation;
-            CirculatingSupply = currencyDetails.CirculatingSupply;
-            MarketCap = currencyDetails.MarketCap;
-            TotalSupply = currencyDetails.TotalSupply;
-            TotalVolume = currencyDetails.TotalVolume;
+            FullyDilutedValuation = currencyDetails.FullyDilutedValuation.ToString();
+            CirculatingSupply = currencyDetails.CirculatingSupply.ToString();
+            MarketCap = currencyDetails.MarketCap.ToString();
+            TotalSupply = currencyDetails.TotalSupply.ToString();
+            TotalVolume = currencyDetails.TotalVolume.ToString();
         }
-        public decimal FullyDilutedValuation { get; set; }
-        public decimal CirculatingSupply { get; set; }
-        public decimal MarketCap { get; set; }
-        public decimal TotalVolume { get; set; }
-        public decimal TotalSupply { get; set; }
+
+        private string _fullyDilutedValuation;
+        public string FullyDilutedValuation
+        {
+            get { return GetFormattedPrice(_fullyDilutedValuation, BasePriceChar); }
+            set { _fullyDilutedValuation = value; }
+        }
+
+        private string _circulatingSupply;
+        public string CirculatingSupply
+        {
+            get { return GetFormattedPrice(_circulatingSupply, BasePriceChar); ; }
+            set { _circulatingSupply = value; }
+        }
+
+        private string _marketCap;
+        public string MarketCap
+        {
+            get { return GetFormattedPrice(_marketCap, BasePriceChar); ; }
+            set { _marketCap = value; }
+        }
+
+        private string _totalVolume;
+        public string TotalVolume
+        {
+            get { return GetFormattedPrice(_totalVolume, BasePriceChar); ; }
+            set { _totalVolume = value; }
+        }
+
+        private string _totalSupply;
+        public string TotalSupply
+        {
+            get { return GetFormattedPrice(_totalSupply, BasePriceChar); ; }
+            set { _totalSupply = value; }
+        }
     }
 }
