@@ -1,47 +1,61 @@
 ﻿using CWA.API.Managers;
 using CWA.API.ViewModels;
+using CWA.Domain.Enteties;
 using CWA.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System.Runtime.CompilerServices;
 
 namespace CWA.API.Controllers
 {
     public class HomeController : Controller
     {
-        private int currencyCountPerPage = 50;
+        private int _currencyCountPerPage = 50;
+        private string _cacheCurenciesKey = "Curencies";
+        private string _cacheAvailableCurrenciesKey = "AvailableCurrencies";
 
+        private readonly IMemoryCache _memoryCache;
         private readonly ICryptoService _cryptoService;
         private readonly CurrencyPaginationManager _currencyPagination;
         private static List<CurrencyViewModel> Currencies { get; set; } = new();
-        public HomeController(ICryptoService cryptoService)
+        public HomeController(IMemoryCache memoryCache, ICryptoService cryptoService)
         {
+            _memoryCache = memoryCache;
             _cryptoService = cryptoService;
-            _currencyPagination = new CurrencyPaginationManager(currencyCountPerPage, currentPage: 1);
+
+            _currencyPagination = new CurrencyPaginationManager(_currencyCountPerPage, currentPage: 1);
         }
         public async Task<IActionResult> Index()
         {
             await LoadAvailableCurrencies();
 
-            if (Currencies.Count == 0)
+            if (!_memoryCache.TryGetValue(_cacheCurenciesKey, out List<CurrencyViewModel> currenciesVM))
             {
                 var currencies = await _cryptoService.GetTopNCurrenciesAsync(topN: 250, pageNum: 1);
 
-                Currencies = CurrencyViewModel.GetCurrencyViewModelList(currencies);
+                currenciesVM = CurrencyViewModel.GetCurrencyViewModelList(currencies);
+
+                _memoryCache.Set(_cacheCurenciesKey, currenciesVM, TimeSpan.FromMinutes(20));
             }
 
-            var result = _currencyPagination.GetCurrenciesByPageNum(currencies: Currencies, pageNum: 1);
+            var result = _currencyPagination.GetCurrenciesByPageNum(currencies: currenciesVM, pageNum: 1);
 
             return View(result);
         }
         private async Task<List<CurrencyBaseViewModel>> LoadAvailableCurrencies()
         {
-            var currencies = await _cryptoService.GetCurrencyListAsync();
+            if (!_memoryCache.TryGetValue(_cacheAvailableCurrenciesKey, out List<CurrencyBaseViewModel> currenciesBaseVM))
+            {
+                var currencies = await _cryptoService.GetCurrencyListAsync();
 
-            var currenciesVM = CurrencyBaseViewModel.GetCurrencyBaseViewModelList(currencies);
+                currenciesBaseVM = CurrencyBaseViewModel.GetCurrencyBaseViewModelList(currencies);
 
-            TempData["AvailableCurrencies"] = currenciesVM;
+                _memoryCache.Set(_cacheAvailableCurrenciesKey, currenciesBaseVM, TimeSpan.FromMinutes(20));
+            }
 
-            return currenciesVM;
+            TempData["AvailableCurrencies"] = currenciesBaseVM;
+
+            return currenciesBaseVM;
         }
 
         [Route("Home/CurrencyDetails/{currencyId}")]
