@@ -7,9 +7,13 @@ using CWA.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<ICryptoAPI, FallbackCryptoAPI>();
+builder.Services.AddTransient<ICryptoAPI, CryptoAPI>();
+builder.Services.AddTransient<FallbackCryptoAPI>();
 builder.Services.AddTransient<ICryptoRepository, CryptoRepository>();
 builder.Services.AddTransient<ICryptoService, CryptoService>();
 builder.Services.AddMemoryCache();

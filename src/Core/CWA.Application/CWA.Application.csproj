@@ -10,4 +10,8 @@
     <ProjectReference Include="..\CWA.Domain\CWA.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
