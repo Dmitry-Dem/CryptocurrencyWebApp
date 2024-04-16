@@ -42,6 +42,7 @@ namespace CWA.API.Controllers
 
             return View(result);
         }
+
         private async Task<List<CurrencyBaseViewModel>> LoadAvailableCurrencies()
         {
             if (!_memoryCache.TryGetValue(_cacheAvailableCurrenciesKey, out List<CurrencyBaseViewModel> currenciesBaseVM))
@@ -58,6 +59,7 @@ namespace CWA.API.Controllers
             return currenciesBaseVM;
         }
 
+
         [Route("Home/CurrencyDetails/{currencyId}")]
         public async Task<IActionResult> CurrencyDetails(string currencyId)
         {
@@ -72,6 +74,7 @@ namespace CWA.API.Controllers
 
             return View(model: result);
         }
+
         public async Task<IActionResult> Converter()
         {
             ConvertViewModel convertViewModel = new ConvertViewModel()

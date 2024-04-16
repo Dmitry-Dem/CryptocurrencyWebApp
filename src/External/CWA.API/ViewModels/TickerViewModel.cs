@@ -27,15 +27,15 @@ namespace CWA.API.ViewModels
         {
             Stack<char> formattedPrice = new Stack<char>();
 
-            int dotIndex = price.IndexOf('.');
+            int dotOrCommaIndex = price.IndexOf('.') == -1 ? price.IndexOf(",") : price.IndexOf(".");
 
             int startIndex = price.Length - 1;
 
-            if (dotIndex != -1)
+            if (dotOrCommaIndex != -1)
             {
-                startIndex = dotIndex - 1;
+                startIndex = dotOrCommaIndex - 1;
 
-                for (int i = price.Length - 1; i >= dotIndex; i--)
+                for (int i = price.Length - 1; i >= dotOrCommaIndex; i--)
                     formattedPrice.Push(price[i]);
             }
 
